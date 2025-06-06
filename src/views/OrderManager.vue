@@ -11,10 +11,6 @@
       </select>
       <input v-model.number="newOrder.quantity" type="number" placeholder="Quantidade" required />
       <input v-model="newOrder.client" placeholder="Cliente" required />
-      <label>
-        <input type="checkbox" v-model="newOrder.paid" /> Pago
-      </label>
-      <input v-model="newOrder.notes" placeholder="Observações" />
       <button type="submit">Adicionar Pedido</button>
     </form>
 
