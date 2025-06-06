@@ -5,7 +5,6 @@
     <main class="buttons">
       <router-link to="/produtos" class="btn">Gerenciar Produtos</router-link>
       <router-link to="/pedidos" class="btn">Gerenciar Pedidos</router-link>
-      <router-link to="/sobre" class="btn">Sobre</router-link>
     </main>
   </div>
 </template>

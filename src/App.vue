@@ -5,8 +5,7 @@
       <nav>
         <router-link to="/">Home</router-link> |
         <router-link to="/produtos">Gerenciar Produtos</router-link> |
-        <router-link to="/pedidos">Gerenciar Pedidos</router-link> |
-        <router-link to="/sobre">Sobre</router-link>
+        <router-link to="/pedidos">Gerenciar Pedidos</router-link>
       </nav>
     </header>
 
