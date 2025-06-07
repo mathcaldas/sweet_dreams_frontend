@@ -38,7 +38,7 @@
           <td>
             <input type="text" v-model="order.notes" @change="updateOrder(index, { notes: order.notes })" />
           </td>
-          <td><button @click="deleteOrder(index)">Excluir</button></td>
+          <td><button @click="confirmDelete(index)">Excluir</button></td>
         </tr>
       </tbody>
     </table>
@@ -47,6 +47,7 @@
 
 <script>
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'OrderManager',
@@ -68,10 +69,12 @@ export default {
       const res = await axios.get('http://localhost:3000/api/products')
       this.products = res.data
     },
+
     async fetchOrders() {
       const res = await axios.get('http://localhost:3000/api/orders')
       this.orders = res.data
     },
+
     async addOrder() {
       const product = this.products.find(p => p.name === this.newOrder.flavor)
       const total = product.price * this.newOrder.quantity
@@ -80,10 +83,38 @@ export default {
       this.newOrder = { flavor: '', quantity: 1, client: '', paid: false, notes: '' }
       this.fetchOrders()
     },
+
     async updateOrder(index, updatedFields) {
       await axios.put(`http://localhost:3000/api/orders/${index}`, updatedFields)
       this.fetchOrders()
     },
+
+    async confirmDelete(index) {
+      const result = await Swal.fire({
+        title: 'Tem certeza?',
+        text: `Deseja excluir "${this.orders[index].client}"?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#aaa',
+        confirmButtonText: 'Sim, excluir!',
+        cancelButtonText: 'Cancelar'
+      })
+
+      if (result.isConfirmed) {
+        await this.deleteOrder(index)
+        await Swal.fire({
+          title: 'Excluido',
+          text: 'O pedido foi excluido com sucesso',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false,
+          willClose: () => {
+            this.fetchOrders()}
+        })
+      }
+    },
+
     async deleteOrder(index) {
       await axios.delete(`http://localhost:3000/api/orders/${index}`)
       this.fetchOrders()

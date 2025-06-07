@@ -74,8 +74,9 @@ export default {
         willClose: () => {
           this.fetchProducts()}
         })
-    }
+      }
     },
+
     async deleteProduct(index) {
       await axios.delete(`http://localhost:3000/api/products/${index}`)
       this.fetchProducts()
